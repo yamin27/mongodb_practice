@@ -17,7 +17,8 @@ MongoClient.connect(URL,config,function (error,MyMongoClinet) {
         // FindOneWithOutCondition(MyMongoClinet);
         // FindOneWithCondition(MyMongoClinet);
         // FindAllData(MyMongoClinet);
-        FindAllDataByProjection(MyMongoClinet);
+        // FindAllDataByProjection(MyMongoClinet);
+        FindAllDataByQuery(MyMongoClinet);
     }
 });
 
@@ -126,6 +127,21 @@ function FindAllDataByProjection(MyMongoClient){
     MyCollection.find(ItemObj, ItemProjection).toArray(function (error, result){
 
         console.log(result)
+    })
+
+}
+
+function FindAllDataByQuery(MyMongoCLient){
+
+    var MyDatabase = MyMongoCLient.db('school');
+    var MyCollection = MyDatabase.collection('students');
+
+    var Query = {Class: "Ten", City: "Dinajpur"}
+
+    MyCollection.find(Query).toArray(function (error, result){
+
+        console.log(result);
+
     })
 
 }
