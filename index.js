@@ -18,7 +18,9 @@ MongoClient.connect(URL,config,function (error,MyMongoClinet) {
         // FindOneWithCondition(MyMongoClinet);
         // FindAllData(MyMongoClinet);
         // FindAllDataByProjection(MyMongoClinet);
-        FindAllDataByQuery(MyMongoClinet);
+        // FindAllDataByQuery(MyMongoClinet);
+        // FindAllDataByLimit(MyMongoClinet);
+        FindAllDataBySort(MyMongoClinet);
     }
 });
 
@@ -139,6 +141,33 @@ function FindAllDataByQuery(MyMongoCLient){
     var Query = {Class: "Ten", City: "Dinajpur"}
 
     MyCollection.find(Query).toArray(function (error, result){
+
+        console.log(result);
+
+    })
+
+}
+
+function FindAllDataByLimit(MyMongoCLient){
+
+    var MyDatabase = MyMongoCLient.db('school');
+    var MyCollection = MyDatabase.collection('students');
+
+    MyCollection.find().limit(4).toArray(function (error, result){
+
+        console.log(result);
+
+    })
+
+}
+function FindAllDataBySort(MyMongoCLient){
+
+    var MyDatabase = MyMongoCLient.db('school');
+    var MyCollection = MyDatabase.collection('students');
+
+    var SortPattern = {Class: -1}
+
+    MyCollection.find().sort(SortPattern).toArray(function (error, result){
 
         console.log(result);
 
