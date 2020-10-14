@@ -16,14 +16,15 @@ MongoClient.connect(URL,config,function (error,MyMongoClinet) {
         // DeleteAllItem(MyMongoClinet);
         // FindOneWithOutCondition(MyMongoClinet);
         // FindOneWithCondition(MyMongoClinet);
-        FindAllData(MyMongoClinet);
+        // FindAllData(MyMongoClinet);
+        FindAllDataByProjection(MyMongoClinet);
     }
 });
 
 function InsertData(MyMongoClinet){
     var MyDataBase= MyMongoClinet.db("school");
     var MyCollection= MyDataBase.collection('students');
-    var MyData={name:"Saharia",Roll:"01",Class:"Ten",City:"DHaka"};
+    var MyData={name:"Mahbub",Roll:"07",Class:"Ten",City:"Madaripur"};
     MyCollection.insertOne(MyData,function (error) {
         if(error){
             console.log("Data Insert Fail");
@@ -108,6 +109,21 @@ function FindAllData(MyMongoClient){
     // var FindObj = {Roll: "01"};
 
     MyCollection.find().toArray(function (error, result){
+
+        console.log(result)
+    })
+
+}
+
+function FindAllDataByProjection(MyMongoClient){
+
+    var MyDatabase = MyMongoClient.db('school');
+    var MyCollection = MyDatabase.collection('students');
+
+    var ItemObj = {};
+    var ItemProjection = {projection:{Roll:"", name: ""}}
+
+    MyCollection.find(ItemObj, ItemProjection).toArray(function (error, result){
 
         console.log(result)
     })
