@@ -12,7 +12,8 @@ MongoClient.connect(URL,config,function (error,MyMongoClinet) {
         console.log("Connection Success");
 
         // InsertData(MyMongoClinet);
-        DeleteData(MyMongoClinet);
+        // DeleteData(MyMongoClinet);
+        DeleteAllItem(MyMongoClinet);
     }
 });
 
@@ -47,5 +48,24 @@ function DeleteData(MyMongoClient){
 
             console.log('Data Deleted Successfully');
         }
+    })
+}
+
+function DeleteAllItem(MyMongoClient){
+
+    var MyDatabase = MyMongoClient.db('school');
+    var MyCollection = MyDatabase.collection('students');
+
+    MyCollection.deleteMany(function (error, ResultObj){
+
+        if (error){
+
+            console.log("Delete Failed")
+        }
+        else {
+
+            console.log(ResultObj.result.n + " Item Deleted")
+        }
+
     })
 }
