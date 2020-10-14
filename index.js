@@ -13,14 +13,17 @@ MongoClient.connect(URL,config,function (error,MyMongoClinet) {
 
         // InsertData(MyMongoClinet);
         // DeleteData(MyMongoClinet);
-        DeleteAllItem(MyMongoClinet);
+        // DeleteAllItem(MyMongoClinet);
+        // FindOneWithOutCondition(MyMongoClinet);
+        // FindOneWithCondition(MyMongoClinet);
+        FindAllData(MyMongoClinet);
     }
 });
 
 function InsertData(MyMongoClinet){
     var MyDataBase= MyMongoClinet.db("school");
     var MyCollection= MyDataBase.collection('students');
-    var MyData={name:"Alam Yamin",Roll:"02",Class:"Ten",City:"Dinajpur"};
+    var MyData={name:"Saharia",Roll:"01",Class:"Ten",City:"DHaka"};
     MyCollection.insertOne(MyData,function (error) {
         if(error){
             console.log("Data Insert Fail");
@@ -68,4 +71,45 @@ function DeleteAllItem(MyMongoClient){
         }
 
     })
+}
+
+function FindOneWithOutCondition(MyMongoClient){
+
+    var MyDatabase = MyMongoClient.db('school');
+    var MyCollection = MyDatabase.collection('students');
+
+    var FindObj = {};
+
+    MyCollection.findOne(FindObj, function (error, result){
+
+        console.log(result)
+    })
+
+}
+
+function FindOneWithCondition(MyMongoClient){
+
+    var MyDatabase = MyMongoClient.db('school');
+    var MyCollection = MyDatabase.collection('students');
+
+    var FindObj = {Roll: "01"};
+
+    MyCollection.findOne(FindObj, function (error, result){
+
+        console.log(result)
+    })
+
+}
+function FindAllData(MyMongoClient){
+
+    var MyDatabase = MyMongoClient.db('school');
+    var MyCollection = MyDatabase.collection('students');
+
+    // var FindObj = {Roll: "01"};
+
+    MyCollection.find().toArray(function (error, result){
+
+        console.log(result)
+    })
+
 }
