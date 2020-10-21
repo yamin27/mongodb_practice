@@ -20,7 +20,10 @@ MongoClient.connect(URL,config,function (error,MyMongoClinet) {
         // FindAllDataByProjection(MyMongoClinet);
         // FindAllDataByQuery(MyMongoClinet);
         // FindAllDataByLimit(MyMongoClinet);
-        FindAllDataBySort(MyMongoClinet);
+        // FindAllDataBySort(MyMongoClinet);
+        // UpdateMyData(MyMongoClinet);
+        // CreateMyCollection(MyMongoClinet);
+        DeleteCollection(MyMongoClinet);
     }
 });
 
@@ -133,9 +136,9 @@ function FindAllDataByProjection(MyMongoClient){
 
 }
 
-function FindAllDataByQuery(MyMongoCLient){
+function FindAllDataByQuery(MyMongoClient){
 
-    var MyDatabase = MyMongoCLient.db('school');
+    var MyDatabase = MyMongoClient.db('school');
     var MyCollection = MyDatabase.collection('students');
 
     var Query = {Class: "Ten", City: "Dinajpur"}
@@ -148,9 +151,9 @@ function FindAllDataByQuery(MyMongoCLient){
 
 }
 
-function FindAllDataByLimit(MyMongoCLient){
+function FindAllDataByLimit(MyMongoClient){
 
-    var MyDatabase = MyMongoCLient.db('school');
+    var MyDatabase = MyMongoClient.db('school');
     var MyCollection = MyDatabase.collection('students');
 
     MyCollection.find().limit(4).toArray(function (error, result){
@@ -160,14 +163,51 @@ function FindAllDataByLimit(MyMongoCLient){
     })
 
 }
-function FindAllDataBySort(MyMongoCLient){
+function FindAllDataBySort(MyMongoClient){
 
-    var MyDatabase = MyMongoCLient.db('school');
+    var MyDatabase = MyMongoClient.db('school');
     var MyCollection = MyDatabase.collection('students');
 
     var SortPattern = {Class: -1}
 
     MyCollection.find().sort(SortPattern).toArray(function (error, result){
+
+        console.log(result);
+
+    })
+
+}
+
+function UpdateMyData(MyMongoClient){
+
+    var MyDatabase = MyMongoClient.db('school');
+    var MyCollection = MyDatabase.collection('students');
+
+    var MyQuery = {Roll: "01"};
+    var newValue = {$set:{name:"Sarker Y",City:"Dinajpur"}}
+
+
+    MyCollection.updateOne(MyQuery, newValue, function (error, result){
+
+        console.log(result);
+    });
+
+}
+
+function CreateMyCollection(MyMongoClient){
+
+    var MyDatabase = MyMongoClient.db('school');
+    MyDatabase.createCollection('teachers', function (error, result){
+
+        console.log(result);
+    })
+
+}
+
+function DeleteCollection(MyMongoClient){
+
+    var MyDatabase = MyMongoClient.db('school');
+    MyDatabase.dropCollection('teachers', function (error, result){
 
         console.log(result);
 
